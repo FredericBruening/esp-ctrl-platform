@@ -22,7 +22,8 @@ class TimeSeriesFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'topic' => $this->faker->slug(5),
+            'payload' => $this->faker->text()
         ];
     }
 }
