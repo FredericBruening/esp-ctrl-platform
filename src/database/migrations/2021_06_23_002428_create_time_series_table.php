@@ -17,6 +17,7 @@ class CreateTimeSeriesTable extends Migration
             $table->id();
             $table->string('topic', 1024);
             $table->string('payload', 2048);
+            $table->boolean('delete')->default(false);
             $table->timestamps();
         });
     }

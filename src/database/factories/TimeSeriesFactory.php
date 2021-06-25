@@ -23,7 +23,8 @@ class TimeSeriesFactory extends Factory
     {
         return [
             'topic' => $this->faker->slug(5),
-            'payload' => $this->faker->text()
+            'payload' => $this->faker->text(),
+            'delete' => 0
         ];
     }
 }
