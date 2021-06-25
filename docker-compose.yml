@@ -18,6 +18,8 @@ services:
       - redis
       - mysql
       - mailhog
+      - vernemq
+      - vmqlistener
     networks:
       - laravel
 
@@ -106,5 +108,32 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
+    networks:
+      - laravel
+
+  vernemq:
+    image: vernemq/vernemq:latest
+    container_name: vernemq
+    ports:
+      - 1883:1883
+    environment:
+      DOCKER_VERNEMQ_ACCEPT_EULA: 'yes'
+      DOCKER_VERNEMQ_USER_BROKER: secret
+    networks:
+      - laravel
+
+  vmqlistener:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: vmqlistener
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html:delegated
+    depends_on:
+      - php
+    working_dir: /var/www/html
+    user: laravel
+    entrypoint: ['php', '/var/www/html/artisan', 'vmq:listen']
     networks:
       - laravel
