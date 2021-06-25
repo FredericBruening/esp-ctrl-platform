@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MQTTMessagesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/mqtt-messages/{topic}', [MQTTMessagesController::class, 'retrieve']);
+Route::get('/mqtt-messages/{topic}/last/{count}', [MQTTMessagesController::class, 'retrieve']);
+Route::post('/mqtt-messages', [MQTTMessagesController::class, 'publish']);
